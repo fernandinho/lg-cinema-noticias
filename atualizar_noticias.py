@@ -10,11 +10,13 @@ FEEDS = [
     ("TECHTUDO", "https://www.techtudo.com.br/rss/techtudo"),
 ]
 
+
 def limpar(texto):
     texto = re.sub(r"<[^>]+>", " ", texto or "")
     texto = html.unescape(texto)
     texto = re.sub(r"\s+", " ", texto)
     return texto.strip()
+
 
 def buscar(nome, url):
     req = urllib.request.Request(
@@ -33,16 +35,17 @@ def buscar(nome, url):
         link = item.findtext("link", "")
         descricao = item.findtext("description", "")
 
-       if titulo and link:
-      noticias.append({
+        if titulo and link:
+            noticias.append({
                 "source": nome,
                 "title": limpar(titulo),
                 "link": link.strip(),
                 "description": limpar(descricao),
                 "description_html": descricao
-    })
+            })
 
     return noticias
+
 
 def main():
     listas = []
@@ -64,12 +67,15 @@ def main():
                 resultado.append(noticias[i])
 
     if not resultado:
-        raise RuntimeError("Nenhuma noticia obtida; arquivo anterior preservado.")
+        raise RuntimeError(
+            "Nenhuma noticia obtida; arquivo anterior preservado."
+        )
 
     with open("tech-news-data.json", "w", encoding="utf-8") as arquivo:
         json.dump(resultado, arquivo, ensure_ascii=False, indent=2)
 
     print("Arquivo atualizado:", len(resultado), "noticias")
+
 
 if __name__ == "__main__":
     main()
