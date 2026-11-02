@@ -34,12 +34,12 @@ def buscar(nome, url):
         descricao = item.findtext("description", "")
 
        if titulo and link:
-    noticias.append({
-        "source": nome,
-        "title": limpar(titulo),
-        "link": link.strip(),
-        "description": limpar(descricao),
-        "description_html": descricao
+      noticias.append({
+                "source": nome,
+                "title": limpar(titulo),
+                "link": link.strip(),
+                "description": limpar(descricao),
+                "description_html": descricao
     })
 
     return noticias
